@@ -10,6 +10,7 @@ import matplotlib.gridspec as gridspec
 from mpl_toolkits.mplot3d import Axes3D
 from itertools import combinations
 from scipy.linalg import block_diag
+from factorization_graph import cosine_similarity
 
 matplotlib.use('agg')
 matplotlib.rcParams['pdf.fonttype'] = 42
@@ -17,9 +18,6 @@ matplotlib.rcParams['ps.fonttype'] = 42
 
 from utils import *
 
-###
-# PLOT DATA
-###
 
 def plot_synthetic_data(data, dimensions, title=None, filename=None,
                         azim=60, elev=30, proj_type='persp'):
@@ -340,11 +338,7 @@ def plot_product_sims(mixtures, phi, Sigma, steps, n_factors=2, filename=None):
           v_combo *= phi[:,i]
 
         # test with positive
-        sim = calculate_sim(v_combo, v)
-
-        # test with negative
-        dsim = calculate_sim(v_combo, -v)
-        sim = max(sim, dsim)
+        sim = abs(cosine_similarity(v_combo, v))
         sims.append(sim)
 
     best_sim = np.max(sims)
@@ -429,8 +423,8 @@ def plot_k_cut(labels,n_factors, theta, z):
 def do_generate_plots(image_dir, info, result, eig_crit, sim_crit):
   name = info['name']
   datatype = info['datatype']
-  phi = result['phi']
-  Sigma = result['Sigma']
+  phi = result['egvecs']
+  Sigma = result['egvals']
   data = result['data']
   C = result['C_matrix']
   all_sims = result['all_sims']
@@ -527,6 +521,6 @@ def do_generate_plots(image_dir, info, result, eig_crit, sim_crit):
                     filename='{}/{}'.format(image_dir, 'product-eig_sim-scores_{}.png'.format(name)))
 
   # plot C matrix organized by manifold
-  print("Plotting separability matrix...")
-  plot_C_matrix(manifolds, C=C,
-                filename='{}/{}'.format(image_dir, '{}_sep_matrix.png'.format(name)))
+  # print("Plotting separability matrix...")
+  # plot_C_matrix(manifolds, C=C,
+  #               filename='{}/{}'.format(image_dir, '{}_sep_matrix.png'.format(name)))

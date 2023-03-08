@@ -1,7 +1,4 @@
-# algorithm.py
-
-import sys
-import time
+from itertools import combinations
 import numpy as np
 
 from diffusion_maps import *
@@ -35,8 +32,8 @@ def factorize_manifold(
   result['data'] = data
 
   # Approximating the Laplacian eigendecomposition
-  similarty_mat = build_similarity_matrix(data, kernel_width)
-  egvecs, egvals = comp_laplacian_eigendec(data, similarty_mat, kernel_width, n_eigenvectors)
+  similarty_mat = compute_similarity_matrix(data, kernel_width)
+  egvecs, egvals = comp_laplacian_eigendec(similarty_mat, kernel_width, n_eigenvectors)
 
   result['egvecs'] = egvecs
   result['egvals'] = egvals
@@ -49,7 +46,7 @@ def factorize_manifold(
   result['all_sims'] = all_sims
 
   # Partitioning the eigenfactors by their respective manifold
-  labels, C = split_eigenvectors(best_matches, best_sims, n_eigenvectors, n_factors=n_factors)
+  labels, C = split_eigenvectors(best_matches, best_sims)
   result['C_matrix'] = C
 
   manifolds = []

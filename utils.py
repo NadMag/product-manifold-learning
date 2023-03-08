@@ -1,5 +1,3 @@
-# helper methods for the algorithm.
-
 import numpy as np
 
 
@@ -23,14 +21,6 @@ def get_gt_data(data, datatype):
     data_gt = data
 
   return data_gt
-
-def downsample_data(data, l):
-  '''
-  downsamples data with resolution L * L to resolution l * l
-  '''
-  stride = L // l
-  lowres_data = data[:,::stride,::stride]
-  return lowres_data
 
 
 def get_product_eigs(manifolds, n_eigenvectors):

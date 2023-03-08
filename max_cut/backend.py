@@ -58,7 +58,7 @@ def get_partition(nodes, vectors):
     random = np.random.normal(size=vectors.shape[1])
     random /= np.linalg.norm(random, 2)
     # Compute partition probabilities and round the cut.
-    labels_by_index = np.sign(np.dot(vectors, random))
+    labels_by_index = np.sign(np.dot(vectors, random)).astype(int)
     labels_by_node = {v: labels_by_index[i] for (i, v) in enumerate(nodes)}
     return labels_by_node
 

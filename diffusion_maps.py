@@ -2,7 +2,7 @@ import numpy as np
 from scipy.spatial.distance import pdist, squareform
 from sklearn.utils.extmath import randomized_svd
 
-def build_similarity_matrix(data, sigma):
+def compute_similarity_matrix(data, sigma):
   """Builds the Gaussian similarity matrix of given data points
 
   Args:

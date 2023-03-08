@@ -17,7 +17,7 @@
 !/max_cut/
 !/reproduce_figures.py
 !/generate_data.py
-!/expirement.py
+!/run_expirement.py
 !/algorithm.py
 !/figures.py
 

@@ -60,7 +60,7 @@ def split_eigenvectors(best_matches: dict, best_sims: dict):
   sdp.solve()
   res = sdp._results
   cut = res['cut']
-  labels = np.zeros((2, len(graph.nodes)))
+  labels = np.zeros((2, len(graph.nodes)), dtype=int)
   labels[0,:] = np.array(graph.nodes)
   labels[1, :] = np.array([max(cut[eigvec_index], 0) for eigvec_index in graph.nodes])
 

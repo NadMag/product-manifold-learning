@@ -12,7 +12,7 @@ import numpy as np
 
 from utils import *
 from plots import *
-from algorithm import factorize
+from algorithm import factorize_manifold
 from data.preprocessing import preprocess_cryo_em_data
 
 
@@ -49,13 +49,15 @@ def main():
   K = configs['K']
   seed = configs['seed']
 
+  np.random.seed(seed)
+
   if datatype == 'cryo-em': # preprocess cryo-EM data
     image_data = info['image_data']
     image_data_ = preprocess_cryo_em_data(image_data)
     info['data'] = image_data_
 
-  result = factorize(info['data'], sigma, n_eigenvectors, n_factors, eig_crit, sim_crit, 
-                      K=K, seed=seed, verbose=True)
+  result = factorize_manifold(info['data'], sigma, n_eigenvectors, n_factors, eig_crit, sim_crit)
+  print_manifolds(result['manifolds'])
 
   # create output directory
   if not os.path.exists(arg['outdir']):
@@ -71,6 +73,7 @@ def main():
   # generate plots
   if arg['generate_plots']:
     do_generate_plots(arg['outdir'], info, result, eig_crit, sim_crit)
+
 
 if __name__ == "__main__":
   main()

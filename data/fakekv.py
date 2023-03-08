@@ -8,13 +8,13 @@ import urllib.request
 import urllib.parse
 import mrcfile
 
-DATA_URL = 'https://spr.math.princeton.edu/examples/'
-DATA_DIR = os.path.join(os.path.dirname(__file__), 'data/fakekv_data/')
+DATA_URL = 'http://spr.math.princeton.edu/examples/'
+DATA_DIR = os.path.join(os.path.dirname(__file__), 'fakekv_data')
 L = 108
 
 class FakeKV:
   def __init__(self):
-    _download_fakekv()
+    # _download_fakekv()
     with mrcfile.open(os.path.join(DATA_DIR,'FakeKvMapAlphaOne.mrc')) as mrc_alpha_one:
       self.alpha_one = np.maximum(mrc_alpha_one.data, 0)
     with mrcfile.open(os.path.join(DATA_DIR, 'FakeKvMapAlphaTwo.mrc')) as mrc_alpha_two:
