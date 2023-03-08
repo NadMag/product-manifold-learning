@@ -6,14 +6,19 @@
 !/data/
 /data/*
 !/data/fakekv_data
+!/data/*.py
 !/params*
 !/configs*
 
-!/fakekv.py
 !/utils.py
 !/plots.py
+!/diffusion_maps.py
+!/factorization_graph.py
+!/max_cut/
 !/reproduce_figures.py
 !/generate_data.py
-!/factorize.py
+!/expirement.py
 !/algorithm.py
 !/figures.py
+
+**/__pycache__

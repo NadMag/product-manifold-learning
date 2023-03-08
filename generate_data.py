@@ -7,7 +7,7 @@ import os
 import argparse
 import numpy as np
 
-from fakekv import *
+from data.fakekv import *
 
 def generate_synthetic_data(dimensions, n_samples, datatype='rectangle',
                             seed=0, noise=0.05):
