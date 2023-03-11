@@ -18,7 +18,7 @@ matplotlib.rcParams['ps.fonttype'] = 42
 
 from plots import *
 from utils import *
-from run_expirement import *
+from run_experiment import *
 
 n_eigenvectors = 100
 rect3d_dimensions = [1 + np.sqrt(np.pi), 1.5, 0.05]

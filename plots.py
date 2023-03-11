@@ -218,13 +218,50 @@ def plot_eigenvectors(data, dimensions, eigenvectors, full=True, labels=None, ti
     plt.savefig(filename)
   plt.close()
 
-def plot_eigenvectors_combo(data, v1, v2, title=None, filename=None):
-  '''
-  plots the combination (element-wise multiplication) of vectors v1 and v2
-  '''
+def plot_eigenvectors_table(data, results, eigenvectors, full=True, labels=None, title=None,
+                      filename=None, offset_scale=0.1, azim=60, elev=30, proj_type='persp'):
+  
+  best_matches = results['best_matches']
+  manifolds = results['manifolds']
+  factors_one = manifolds[0][:4]
+  factors_two = manifolds[1][:4]
+  inv_map = {(v[0], v[1]) if v[0] in factors_one else (v[1], v[0]) : k for k, v in best_matches.items()}
+  rows = 5
+  cols = rows
+  fig, axs = plt.subplots(rows, cols, figsize=(5 * cols, 2.25 * rows))
+  fig.tight_layout()
+  for r in range(rows):
+    for c in range(cols):
+      ax = axs[r, c] if len(eigenvectors) > 1 else axs
+      index = r * cols + c
+      if index >= len(eigenvectors):
+        ax.set_visible(False)
 
-  v = v1 * v2
-  plot_eigenvector(data, v, title, filename)
+      else:
+        if r == 0 and c == 0:
+          v = eigenvectors[0]
+
+        elif r == 0:
+          v = eigenvectors[factors_one[c-1]]
+
+        elif c == 0:
+          v = eigenvectors[factors_two[r-1]]
+        
+        else:
+          v = eigenvectors[inv_map[(factors_one[r-1], factors_two[c-1])]]
+        
+        v /= np.linalg.norm(v)
+        g = ax.scatter(data[:,0], data[:,1], marker="s", c=v)
+        ax.axis('off')
+        # fig.colorbar(g, ax=ax)
+        ax.set_aspect('equal', 'datalim')
+        # if labels is not None:
+        #   ax.set_title(labels[index])
+
+  if filename:
+    plt.savefig(filename)
+  plt.close()
+
 
 def plot_independent_eigenvectors(manifold1, manifold2,
                                   n_eigenvectors,
